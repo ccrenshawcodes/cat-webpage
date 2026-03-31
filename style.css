@@ -107,4 +107,8 @@ section {
   ul {
     display: none;
   }
+
+  .cat-slides {
+    max-width: 80vw;
+  }
 }
