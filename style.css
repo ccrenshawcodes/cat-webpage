@@ -5,8 +5,7 @@
    License: none (public domain)
 */
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+html, body, div, span, applet, object, iframe, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
@@ -52,6 +51,7 @@ table {
   background-color: aqua;
   font-family: "Roboto", sans-serif;
   box-sizing: border-box;
+  text-decoration: none;
 }
 
 .nav-icon {
@@ -76,6 +76,19 @@ ul > * {
   &:hover {
     cursor: pointer;
   }
+}
+
+section {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.cat-slides {
+  max-height: 40em;
+  max-width: 30em;
+  box-shadow: 0px 0px 15px 2px #5F6060;
+  margin: 2em;
 }
 
 @media (width < 500px) {

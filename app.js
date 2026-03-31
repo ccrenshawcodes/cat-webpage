@@ -10,5 +10,34 @@ nav.addEventListener("mouseleave", () => {
   navList.classList.remove('hovered-list');
 })
 
-//  TODO: mouse passing over thin gap between nav expander and nav items causes hover state to end
-//  it has something to do with the padding.
+catPics = document.querySelector('.cat-slides');
+
+async function getCats () {
+  try {
+    const catDataQuery = await fetch(`https://api.thecatapi.com/v1/images/search`, {mode: 'cors'});
+    if (!catDataQuery.ok) {
+      catPics.append('Oops! Something went wrong');
+      throw new Error(catDataQuery.status);
+    }
+    catData = await catDataQuery.json();
+    return catData;
+  } catch (err) {
+    catPics.append('Oops! Something went wrong');
+    console.error(err);
+    return null;
+  }
+}
+
+async function displayCat () {
+  const myCatData = await getCats();
+  catPic = myCatData[0].url;
+  catPics.src = catPic;
+}
+
+//  TODO: there's a short delay between when the page loads and when the first cat pic loads.
+//  I should put in a cute loading message for those with slow internet 
+window.addEventListener("load", displayCat())
+
+setInterval (() => {
+  displayCat();
+}, 10000);
