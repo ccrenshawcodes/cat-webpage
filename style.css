@@ -89,15 +89,53 @@ ul > * {
 
 section {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   text-align: center;
 }
 
+.cat-slide-container {
+  height: 25em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .cat-slides {
-  max-height: 40em;
+  max-height: 20em;
   max-width: 30em;
   box-shadow: 0px 0px 15px 2px var(--off-black);
   margin: 2em;
+}
+
+.weather {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.weather-input {
+  display: flex;
+  width: 45vw;
+}
+
+.weather-input > input {
+  flex: 6;
+}
+
+.weather-input > button {
+  flex: 1;
+  background-color: #6b52d1;
+  color: white;
+}
+
+.weather-input > * {
+  border-radius: 0.5em;
+  padding: 2px;
+  height: 3em;
+  margin: 0.5em;
 }
 
 @media (width < 500px) {

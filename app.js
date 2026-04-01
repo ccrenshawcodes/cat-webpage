@@ -1,3 +1,5 @@
+import { myKey } from "./myKey.js";
+
 const navExpander = document.querySelector('.nav-icon');
 const navList = document.querySelector('ul');
 const nav = document.querySelector('nav');
@@ -10,7 +12,7 @@ nav.addEventListener("mouseleave", () => {
   navList.classList.remove('hovered-list');
 })
 
-catPics = document.querySelector('.cat-slides');
+const catPics = document.querySelector('.cat-slides');
 
 async function getCats () {
   try {
@@ -19,7 +21,7 @@ async function getCats () {
       catPics.append('Oops! Something went wrong');
       throw new Error(catDataQuery.status);
     }
-    catData = await catDataQuery.json();
+    let catData = await catDataQuery.json();
     return catData;
   } catch (err) {
     catPics.append('Oops! Something went wrong');
@@ -30,14 +32,40 @@ async function getCats () {
 
 async function displayCat () {
   const myCatData = await getCats();
-  catPic = myCatData[0].url;
+  const catPic = myCatData[0].url;
   catPics.src = catPic;
 }
 
-//  TODO: there's a short delay between when the page loads and when the first cat pic loads.
-//  I should put in a cute loading message for those with slow internet 
 window.addEventListener("load", displayCat())
 
 setInterval (() => {
   displayCat();
 }, 10000);
+
+async function getWeather (query) {
+  const nowWeatherUrl = `http://api.weatherapi.com/v1/current.json?key=${myKey}&q=${query}`;
+  try {
+    const nowWeatherResponse = await fetch(nowWeatherUrl, {mode: "cors"});
+    if (!nowWeatherResponse.ok) {
+      throw new Error(nowWeatherResponse.status);
+    }
+    const nowWeather = await nowWeatherResponse.json();
+    console.log(nowWeather);
+    return nowWeather;
+  } catch (err) {
+    alert(`An error occurred! Error code: ${err}`);
+    console.error(err);
+    throw new Error(err);
+  }
+}
+
+const weatherButton = document.querySelector('button');
+const weatherInput = document.querySelector('input');
+const nowWeatherDisplay = document.querySelector('.current-weather');
+const pastWeatherDisplay = document.querySelector('.past-weather');
+
+weatherButton.addEventListener("click", async () => {
+  const currentWeather = await getWeather(weatherInput.value);
+  nowWeatherDisplay.append(`Your current temp is ${currentWeather.current.temp_f}.`);
+  nowWeatherDisplay.append(`The condition is ${currentWeather.current.condition.text}, with winds at ${currentWeather.current.wind_mph} mph from the ${currentWeather.current.wind_dir}.`);
+});
